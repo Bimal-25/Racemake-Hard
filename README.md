@@ -1,3 +1,4 @@
+<img width="1672" height="941" alt="Racemake-Quiz-Architecture" src="https://github.com/user-attachments/assets/c5a37a6f-8366-4f0f-af31-233651f0efac" />
 # RACEMAKE Product Engineer Challenge — Hard
 
 This is a small Bun + Hono TypeScript service that reads the raw `stint.telemetry.json` stream and returns a race engineer style stint analysis.
