@@ -1,0 +1,811 @@
+{
+  "schema": "racemake.analysis.hard.v1",
+  "recorderFinding": {
+    "field": "tyres",
+    "issue": "Tyre temperatures are fixed-point encoded, not plain Celsius values.",
+    "conversion": "tyres.{fl,fr,rl,rr}_celsius = raw / 10",
+    "evidence": "recorder.rs multiplies each TyreTempsC value by scales::TEMPERATURE where TEMPERATURE = 10.0 before serializing as i16."
+  },
+  "stream": {
+    "declaredFrameCount": 7195,
+    "receivedFrameCount": 7195,
+    "cleanFrameCount": 7194,
+    "invalidFrameCount": 1,
+    "timestamp": {
+      "monotonic": true,
+      "medianDtMs": 55,
+      "p95DtMs": 65,
+      "maxDtMs": 2672,
+      "approxHz": 18.18
+    }
+  },
+  "cleaning": {
+    "rules": [
+      "Sort frames by timestamp before analysis.",
+      "Reject frames outside hard telemetry sanity limits: pos 0..1, throttle/brake 0..1, gear -1..8, speed 0..500 km/h, rpm 0..15000.",
+      "Convert tyre temperatures from recorder fixed-point values to Celsius with raw / 10.",
+      "Use time-weighted averages/percentages because the sample rate is not perfectly stable.",
+      "Use lap-position coverage and lap start-to-start timing to decide real racing laps."
+    ],
+    "invalidFrames": [
+      {
+        "index": 3523,
+        "ts": 199318,
+        "lap": 2,
+        "pos": 0.9709,
+        "reasons": [
+          "speed_implausible",
+          "rpm_implausible"
+        ],
+        "frame": {
+          "spd": 4021.4,
+          "rpm": 64510,
+          "gear": 6,
+          "thr": 1,
+          "brk": 0
+        }
+      }
+    ]
+  },
+  "laps": {
+    "realLapCount": 4,
+    "real": [
+      {
+        "lap": 1,
+        "lapTimeMs": 73789,
+        "lapTime": "1:13.789",
+        "topSpeedKmh": 255.8,
+        "avgSpeedKmh": 203.1,
+        "inputs": {
+          "avgThrottle": 0.58,
+          "fullThrottlePct": 42.8,
+          "brakingPct": 37.3,
+          "coastPct": 0,
+          "maxBrake": 0.95,
+          "avgBrakeWhenBraking": 0.443
+        },
+        "tyresC": {
+          "fl": {
+            "avgC": 88.8,
+            "minC": 83.6,
+            "maxC": 93.3
+          },
+          "fr": {
+            "avgC": 84.7,
+            "minC": 79.5,
+            "maxC": 89.1
+          },
+          "rl": {
+            "avgC": 86,
+            "minC": 81.5,
+            "maxC": 89.8
+          },
+          "rr": {
+            "avgC": 83,
+            "minC": 78.6,
+            "maxC": 86.8
+          }
+        }
+      },
+      {
+        "lap": 2,
+        "lapTimeMs": 73518,
+        "lapTime": "1:13.518",
+        "topSpeedKmh": 256.3,
+        "avgSpeedKmh": 205.8,
+        "inputs": {
+          "avgThrottle": 0.58,
+          "fullThrottlePct": 42.8,
+          "brakingPct": 36,
+          "coastPct": 0.1,
+          "maxBrake": 0.96,
+          "avgBrakeWhenBraking": 0.443
+        },
+        "tyresC": {
+          "fl": {
+            "avgC": 96.8,
+            "minC": 93.6,
+            "maxC": 100
+          },
+          "fr": {
+            "avgC": 92.7,
+            "minC": 89.6,
+            "maxC": 95.8
+          },
+          "rl": {
+            "avgC": 93,
+            "minC": 90.5,
+            "maxC": 95.4
+          },
+          "rr": {
+            "avgC": 90,
+            "minC": 87.5,
+            "maxC": 92.3
+          }
+        }
+      },
+      {
+        "lap": 3,
+        "lapTimeMs": 74069,
+        "lapTime": "1:14.069",
+        "topSpeedKmh": 256.3,
+        "avgSpeedKmh": 204.3,
+        "inputs": {
+          "avgThrottle": 0.535,
+          "fullThrottlePct": 39.3,
+          "brakingPct": 39.5,
+          "coastPct": 0,
+          "maxBrake": 0.96,
+          "avgBrakeWhenBraking": 0.428
+        },
+        "tyresC": {
+          "fl": {
+            "avgC": 112.6,
+            "minC": 109.6,
+            "maxC": 117.8
+          },
+          "fr": {
+            "avgC": 108.5,
+            "minC": 105.5,
+            "maxC": 112.7
+          },
+          "rl": {
+            "avgC": 102.6,
+            "minC": 100.6,
+            "maxC": 104.7
+          },
+          "rr": {
+            "avgC": 99.5,
+            "minC": 97.6,
+            "maxC": 101.6
+          }
+        }
+      },
+      {
+        "lap": 4,
+        "lapTimeMs": 73590,
+        "lapTime": "1:13.590",
+        "topSpeedKmh": 256.3,
+        "avgSpeedKmh": 205.6,
+        "inputs": {
+          "avgThrottle": 0.588,
+          "fullThrottlePct": 43.9,
+          "brakingPct": 36.3,
+          "coastPct": 0,
+          "maxBrake": 0.96,
+          "avgBrakeWhenBraking": 0.441
+        },
+        "tyresC": {
+          "fl": {
+            "avgC": 100.3,
+            "minC": 97.6,
+            "maxC": 103.2
+          },
+          "fr": {
+            "avgC": 96.2,
+            "minC": 93.6,
+            "maxC": 99
+          },
+          "rl": {
+            "avgC": 96.6,
+            "minC": 94.5,
+            "maxC": 98.7
+          },
+          "rr": {
+            "avgC": 93.5,
+            "minC": 91.5,
+            "maxC": 95.5
+          }
+        }
+      }
+    ],
+    "excluded": [
+      {
+        "lap": 0,
+        "frameCount": 962,
+        "firstPos": 0.4,
+        "lastPos": 1,
+        "reason": "partial start: first pos 0.400"
+      },
+      {
+        "lap": 5,
+        "frameCount": 1023,
+        "firstPos": 0,
+        "lastPos": 0.42,
+        "reason": "partial end: last pos 0.420; contains low-speed/idle tail"
+      }
+    ],
+    "bestLap": {
+      "lap": 2,
+      "lapTimeMs": 73518,
+      "lapTime": "1:13.518"
+    },
+    "worstLap": {
+      "lap": 3,
+      "lapTimeMs": 74069,
+      "lapTime": "1:14.069"
+    }
+  },
+  "cornerDetection": {
+    "method": "Resample each real lap to normalized lap position, compute median absolute steering at each position, smooth it, and group sustained steering regions. Brake is not used to find corners.",
+    "threshold": {
+      "steeringDeg": 8.98,
+      "rule": "max(8 deg, 60th percentile of smoothed median absolute steering)",
+      "minWidthPos": 0.015,
+      "mergeGapPos": 0.01
+    },
+    "cornerCount": 7,
+    "corners": [
+      {
+        "id": "C1",
+        "entryPos": 0.044,
+        "apexPos": 0.075,
+        "exitPos": 0.106,
+        "direction": "right",
+        "peakMedianAbsSteeringDeg": 88.6,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.044,
+            "toPos": 0.06
+          },
+          "apex": {
+            "atPos": 0.075
+          },
+          "exit": {
+            "fromPos": 0.091,
+            "toPos": 0.106
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 243.6,
+            "apexSpeedKmh": 117.4,
+            "exitSpeedKmh": 220.3,
+            "minSpeedKmh": 116.8,
+            "maxBrake": 0.86,
+            "avgThrottle": 0.226,
+            "brakingPct": 69,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 226.4,
+            "apexSpeedKmh": 122.8,
+            "exitSpeedKmh": 234.5,
+            "minSpeedKmh": 117.8,
+            "maxBrake": 0.85,
+            "avgThrottle": 0.243,
+            "brakingPct": 63,
+            "fullThrottlePct": 1.1
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 226.6,
+            "apexSpeedKmh": 122.2,
+            "exitSpeedKmh": 234.4,
+            "minSpeedKmh": 117.3,
+            "maxBrake": 0.85,
+            "avgThrottle": 0.245,
+            "brakingPct": 63.3,
+            "fullThrottlePct": 0.8
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 235.8,
+            "apexSpeedKmh": 120,
+            "exitSpeedKmh": 227.7,
+            "minSpeedKmh": 117.6,
+            "maxBrake": 0.86,
+            "avgThrottle": 0.238,
+            "brakingPct": 66.1,
+            "fullThrottlePct": 0.8
+          }
+        ]
+      },
+      {
+        "id": "C2",
+        "entryPos": 0.185,
+        "apexPos": 0.205,
+        "exitPos": 0.226,
+        "direction": "left",
+        "peakMedianAbsSteeringDeg": 30.9,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.185,
+            "toPos": 0.195
+          },
+          "apex": {
+            "atPos": 0.205
+          },
+          "exit": {
+            "fromPos": 0.216,
+            "toPos": 0.226
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 238.9,
+            "apexSpeedKmh": 212.8,
+            "exitSpeedKmh": 239,
+            "minSpeedKmh": 211.9,
+            "maxBrake": 0.01,
+            "avgThrottle": 0.874,
+            "brakingPct": 0,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 230.9,
+            "apexSpeedKmh": 216.9,
+            "exitSpeedKmh": 245.9,
+            "minSpeedKmh": 213.7,
+            "maxBrake": 0.01,
+            "avgThrottle": 0.875,
+            "brakingPct": 0,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 208.6,
+            "apexSpeedKmh": 182.7,
+            "exitSpeedKmh": 236.8,
+            "minSpeedKmh": 177.2,
+            "maxBrake": 0.45,
+            "avgThrottle": 0.179,
+            "brakingPct": 57.7,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 234.6,
+            "apexSpeedKmh": 214.7,
+            "exitSpeedKmh": 242.7,
+            "minSpeedKmh": 213.4,
+            "maxBrake": 0.01,
+            "avgThrottle": 0.874,
+            "brakingPct": 0,
+            "fullThrottlePct": 0
+          }
+        ]
+      },
+      {
+        "id": "C3",
+        "entryPos": 0.29,
+        "apexPos": 0.33,
+        "exitPos": 0.37,
+        "direction": "right",
+        "peakMedianAbsSteeringDeg": 113.1,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.29,
+            "toPos": 0.31
+          },
+          "apex": {
+            "atPos": 0.33
+          },
+          "exit": {
+            "fromPos": 0.35,
+            "toPos": 0.37
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 236.4,
+            "apexSpeedKmh": 84.9,
+            "exitSpeedKmh": 218.2,
+            "minSpeedKmh": 83.2,
+            "maxBrake": 0.95,
+            "avgThrottle": 0.214,
+            "brakingPct": 70,
+            "fullThrottlePct": 0.7
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 219.6,
+            "apexSpeedKmh": 90.6,
+            "exitSpeedKmh": 231.3,
+            "minSpeedKmh": 83.7,
+            "maxBrake": 0.96,
+            "avgThrottle": 0.221,
+            "brakingPct": 66.8,
+            "fullThrottlePct": 1.1
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 219.6,
+            "apexSpeedKmh": 90.1,
+            "exitSpeedKmh": 231.1,
+            "minSpeedKmh": 83.5,
+            "maxBrake": 0.96,
+            "avgThrottle": 0.218,
+            "brakingPct": 66.6,
+            "fullThrottlePct": 0.6
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 228.6,
+            "apexSpeedKmh": 87.5,
+            "exitSpeedKmh": 224.9,
+            "minSpeedKmh": 83.5,
+            "maxBrake": 0.96,
+            "avgThrottle": 0.216,
+            "brakingPct": 68.6,
+            "fullThrottlePct": 0.6
+          }
+        ]
+      },
+      {
+        "id": "C4",
+        "entryPos": 0.434,
+        "apexPos": 0.46,
+        "exitPos": 0.486,
+        "direction": "left",
+        "peakMedianAbsSteeringDeg": 56.8,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.434,
+            "toPos": 0.447
+          },
+          "apex": {
+            "atPos": 0.46
+          },
+          "exit": {
+            "fromPos": 0.473,
+            "toPos": 0.486
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 243.9,
+            "apexSpeedKmh": 148.6,
+            "exitSpeedKmh": 220.2,
+            "minSpeedKmh": 148.4,
+            "maxBrake": 0.6,
+            "avgThrottle": 0.239,
+            "brakingPct": 66.6,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 227.8,
+            "apexSpeedKmh": 153.3,
+            "exitSpeedKmh": 233.8,
+            "minSpeedKmh": 149.8,
+            "maxBrake": 0.61,
+            "avgThrottle": 0.251,
+            "brakingPct": 61.1,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 227.9,
+            "apexSpeedKmh": 153.1,
+            "exitSpeedKmh": 233.6,
+            "minSpeedKmh": 149.4,
+            "maxBrake": 0.61,
+            "avgThrottle": 0.248,
+            "brakingPct": 60.3,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 236.3,
+            "apexSpeedKmh": 151.1,
+            "exitSpeedKmh": 227.1,
+            "minSpeedKmh": 149.3,
+            "maxBrake": 0.61,
+            "avgThrottle": 0.229,
+            "brakingPct": 64.7,
+            "fullThrottlePct": 0
+          }
+        ]
+      },
+      {
+        "id": "C5",
+        "entryPos": 0.58,
+        "apexPos": 0.6,
+        "exitPos": 0.62,
+        "direction": "right",
+        "peakMedianAbsSteeringDeg": 35.7,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.58,
+            "toPos": 0.59
+          },
+          "apex": {
+            "atPos": 0.6
+          },
+          "exit": {
+            "fromPos": 0.61,
+            "toPos": 0.62
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 242.9,
+            "apexSpeedKmh": 186.3,
+            "exitSpeedKmh": 222.9,
+            "minSpeedKmh": 186,
+            "maxBrake": 0.21,
+            "avgThrottle": 0.385,
+            "brakingPct": 61.1,
+            "fullThrottlePct": 3.7
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 229.6,
+            "apexSpeedKmh": 189.9,
+            "exitSpeedKmh": 234.3,
+            "minSpeedKmh": 188,
+            "maxBrake": 0.2,
+            "avgThrottle": 0.446,
+            "brakingPct": 52.2,
+            "fullThrottlePct": 3.2
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 229.3,
+            "apexSpeedKmh": 189.2,
+            "exitSpeedKmh": 233.8,
+            "minSpeedKmh": 187.2,
+            "maxBrake": 0.21,
+            "avgThrottle": 0.464,
+            "brakingPct": 52.1,
+            "fullThrottlePct": 3.9
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 236.2,
+            "apexSpeedKmh": 188.1,
+            "exitSpeedKmh": 228.9,
+            "minSpeedKmh": 187.1,
+            "maxBrake": 0.21,
+            "avgThrottle": 0.41,
+            "brakingPct": 56.2,
+            "fullThrottlePct": 3.9
+          }
+        ]
+      },
+      {
+        "id": "C6",
+        "entryPos": 0.708,
+        "apexPos": 0.74,
+        "exitPos": 0.772,
+        "direction": "right",
+        "peakMedianAbsSteeringDeg": 82.7,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.708,
+            "toPos": 0.724
+          },
+          "apex": {
+            "atPos": 0.74
+          },
+          "exit": {
+            "fromPos": 0.756,
+            "toPos": 0.772
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 239.9,
+            "apexSpeedKmh": 107.6,
+            "exitSpeedKmh": 214.2,
+            "minSpeedKmh": 106.9,
+            "maxBrake": 0.81,
+            "avgThrottle": 0.23,
+            "brakingPct": 67,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 222.8,
+            "apexSpeedKmh": 112.9,
+            "exitSpeedKmh": 229.1,
+            "minSpeedKmh": 107.7,
+            "maxBrake": 0.81,
+            "avgThrottle": 0.236,
+            "brakingPct": 63.1,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 222.5,
+            "apexSpeedKmh": 112.2,
+            "exitSpeedKmh": 229,
+            "minSpeedKmh": 107.4,
+            "maxBrake": 0.81,
+            "avgThrottle": 0.236,
+            "brakingPct": 63.9,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 232.2,
+            "apexSpeedKmh": 109.9,
+            "exitSpeedKmh": 221.6,
+            "minSpeedKmh": 107.6,
+            "maxBrake": 0.81,
+            "avgThrottle": 0.232,
+            "brakingPct": 67.3,
+            "fullThrottlePct": 0
+          }
+        ]
+      },
+      {
+        "id": "C7",
+        "entryPos": 0.847,
+        "apexPos": 0.875,
+        "exitPos": 0.902,
+        "direction": "left",
+        "peakMedianAbsSteeringDeg": 61.1,
+        "basis": "median(abs(steering_deg)) across real laps, smoothed over normalized lap position",
+        "phases": {
+          "entry": {
+            "fromPos": 0.847,
+            "toPos": 0.861
+          },
+          "apex": {
+            "atPos": 0.875
+          },
+          "exit": {
+            "fromPos": 0.889,
+            "toPos": 0.902
+          }
+        },
+        "perLap": [
+          {
+            "lap": 1,
+            "entrySpeedKmh": 243.6,
+            "apexSpeedKmh": 132.9,
+            "exitSpeedKmh": 211.7,
+            "minSpeedKmh": 132.6,
+            "maxBrake": 0.56,
+            "avgThrottle": 0.231,
+            "brakingPct": 66,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 2,
+            "entrySpeedKmh": 227.2,
+            "apexSpeedKmh": 137.2,
+            "exitSpeedKmh": 227.2,
+            "minSpeedKmh": 133.7,
+            "maxBrake": 0.56,
+            "avgThrottle": 0.24,
+            "brakingPct": 60.8,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 3,
+            "entrySpeedKmh": 227,
+            "apexSpeedKmh": 136.6,
+            "exitSpeedKmh": 227.4,
+            "minSpeedKmh": 133.6,
+            "maxBrake": 0.55,
+            "avgThrottle": 0.241,
+            "brakingPct": 60.7,
+            "fullThrottlePct": 0
+          },
+          {
+            "lap": 4,
+            "entrySpeedKmh": 236.1,
+            "apexSpeedKmh": 134.9,
+            "exitSpeedKmh": 219.9,
+            "minSpeedKmh": 133.5,
+            "maxBrake": 0.56,
+            "avgThrottle": 0.229,
+            "brakingPct": 65.5,
+            "fullThrottlePct": 0
+          }
+        ]
+      }
+    ]
+  },
+  "timeLoss": {
+    "comparison": "lap 3 versus best lap 2",
+    "bestLap": 2,
+    "worstLap": 3,
+    "totalLossMs": 551,
+    "method": "Interpolate elapsed time at fixed normalized lap-position points and measure where the time delta grows.",
+    "byCorner": [
+      {
+        "corner": "C2",
+        "entryPos": 0.185,
+        "exitPos": 0.226,
+        "lossMs": 409.1
+      },
+      {
+        "corner": "C3",
+        "entryPos": 0.29,
+        "exitPos": 0.37,
+        "lossMs": 23.2
+      },
+      {
+        "corner": "C1",
+        "entryPos": 0.044,
+        "exitPos": 0.106,
+        "lossMs": 17.8
+      },
+      {
+        "corner": "C7",
+        "entryPos": 0.847,
+        "exitPos": 0.902,
+        "lossMs": 15.4
+      },
+      {
+        "corner": "C6",
+        "entryPos": 0.708,
+        "exitPos": 0.772,
+        "lossMs": 14.8
+      },
+      {
+        "corner": "C4",
+        "entryPos": 0.434,
+        "exitPos": 0.486,
+        "lossMs": 11.9
+      },
+      {
+        "corner": "C5",
+        "entryPos": 0.58,
+        "exitPos": 0.62,
+        "lossMs": 10.4
+      }
+    ],
+    "largestLoss": {
+      "corner": "C2",
+      "entryPos": 0.185,
+      "exitPos": 0.226,
+      "lossMs": 409.1,
+      "evidence": {
+        "bestLap": {
+          "lap": 2,
+          "entrySpeedKmh": 230.9,
+          "apexSpeedKmh": 216.9,
+          "exitSpeedKmh": 245.9,
+          "minSpeedKmh": 213.7,
+          "maxBrake": 0.01,
+          "avgThrottle": 0.875,
+          "brakingPct": 0,
+          "fullThrottlePct": 0
+        },
+        "worstLap": {
+          "lap": 3,
+          "entrySpeedKmh": 208.6,
+          "apexSpeedKmh": 182.7,
+          "exitSpeedKmh": 236.8,
+          "minSpeedKmh": 177.2,
+          "maxBrake": 0.45,
+          "avgThrottle": 0.179,
+          "brakingPct": 57.7,
+          "fullThrottlePct": 0
+        },
+        "entrySpeedDeltaKmh": -22.3,
+        "apexSpeedDeltaKmh": -34.2,
+        "maxBrakeDelta": 0.44,
+        "avgThrottleDelta": -0.696
+      }
+    }
+  },
+  "radioCall": "Four tenths lost at C2, the left-hander from pos 0.185 to 0.226. On the best lap you carried 230.9 km/h in and stayed off the brake; on lap 3 you arrived 22.3 km/h slower, braked to 45%, and apex speed was 34.2 km/h lower. Do not turn it into a braking corner — commit to the entry and keep throttle maintenance through the apex.",
+  "confidence": {
+    "cornerDetection": "medium-high",
+    "timeLoss": "high",
+    "notes": [
+      "No GPS/map is present, so corners are inferred from steering shape rather than physical curvature.",
+      "C2 is robust because it appears as the same steering feature across laps even though the driver brakes it on lap 3 and nearly carries it on lap 2."
+    ]
+  }
+}
